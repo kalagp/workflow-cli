@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/dellemc-symphony/workflow-cli/models"
@@ -99,9 +100,17 @@ func ValidateEndpoint(endpoint string) bool {
 		log.Warnf("Host must be a valid IP or Hostname")
 		return false
 
-	} else if u.Port() == "" {
-		log.Warnf("Endpoint must include a valid Port Number")
-		return false
+	} else if u.Port() != "" {
+		portNumber, err := strconv.Atoi(u.Port())
+		if err != nil {
+			log.Warnf("Could not parse port number for %s (%s)", endpoint, err)
+			return false
+		}
+
+		if portNumber < 0 || portNumber > 65536 {
+			log.Warnf("Endpoint must include a valid Port Number (0-65535)")
+			return false
+		}
 	}
 
 	// Endpoint is valid
