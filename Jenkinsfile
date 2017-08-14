@@ -148,7 +148,7 @@ pipeline {
             }
         }
     }
-    post {
+  /*  post {
         always {
             cleanWorkspace()
         }
@@ -158,5 +158,5 @@ pipeline {
         failure {
             failureEmail()
         }
-    }
+    } */
 }
