@@ -51,21 +51,36 @@ mock: build-linux
 
 integration-test: build-linux
 	ginkgo -r -race -trace -cover -randomizeAllSpecs --slowSpecThreshold=65 --focus="\bINTEGRATION\b" -- --https=false
+	mv cmd/cmd.coverprofile INTEGRATION_http.coverprofile
+
 	ginkgo -r -race -trace -cover -randomizeAllSpecs --slowSpecThreshold=65 --focus="\bINTEGRATION\b" -- --https=true
+	mv cmd/cmd.coverprofile INTEGRATION_https.coverprofile
+
 	cp resources/endpoint_template.yaml $(GOOUT)/linux/endpoint.yaml
 
 unit-test: build-linux
 	ginkgo -r -race -trace -cover -randomizeAllSpecs --slowSpecThreshold=65 --focus="\bUNIT\b" -- --https=false
+	mv cmd/cmd.coverprofile UNIT_http.coverprofile
+
 	ginkgo -r -race -trace -cover -randomizeAllSpecs --slowSpecThreshold=65 --focus="\bUNIT\b" -- --https=true
+	mv cmd/cmd.coverprofile UNIT_https.coverprofile
+
 	cp resources/endpoint_template.yaml $(GOOUT)/linux/endpoint.yaml
 
 test: build-linux
 	ginkgo -r -race -trace -cover -randomizeAllSpecs --slowSpecThreshold=65 -- --https=false
+	mv cmd/cmd.coverprofile http.coverprofile
+
 	ginkgo -r -race -trace -cover -randomizeAllSpecs --slowSpecThreshold=65 -- --https=true
+	mv cmd/cmd.coverprofile https.coverprofile
+
 	cp resources/endpoint_template.yaml $(GOOUT)/linux/endpoint.yaml
 
 cover-cmd: test
 	go tool cover -html=cmd/cmd.coverprofile
+
+coverage:
+	./coverage.sh
 
 build: build-linux build-mac build-windows
 
