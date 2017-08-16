@@ -1,7 +1,4 @@
 #!/bin/bash
-go get github.com/axw/gocov/...
-go get github.com/AlekSi/gocov-xml
-
 shopt -s nullglob
 
 if [ ls *.coverprofile > /dev/null 2>&1 ];
@@ -10,6 +7,9 @@ then
     exit
 
 else
+    go get -u github.com/axw/gocov/...
+    go get -u github.com/AlekSi/gocov-xml
+
     echo "Converting coverprofiles..."
     for file in *.coverprofile
     do
