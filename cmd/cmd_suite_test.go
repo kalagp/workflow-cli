@@ -12,6 +12,7 @@ import (
 
 	"github.com/dellemc-symphony/workflow-cli/mock"
 	. "github.com/onsi/ginkgo"
+	"github.com/onsi/ginkgo/reporters"
 	. "github.com/onsi/gomega"
 	"gopkg.in/gin-gonic/gin.v1"
 
@@ -26,7 +27,8 @@ func init() {
 
 func TestCmd(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Cmd Suite")
+	junitReporter := reporters.NewJUnitReporter("junit.xml")
+	RunSpecsWithDefaultAndCustomReporters(t, "Cmd Suite", []Reporter{junitReporter})
 }
 
 var router *gin.Engine

@@ -51,28 +51,34 @@ mock: build-linux
 
 integration-test: build-linux
 	ginkgo -r -race -trace -cover -randomizeAllSpecs --slowSpecThreshold=65 --focus="\bINTEGRATION\b" -- --https=false
-	mv cmd/cmd.coverprofile INTEGRATION_http.coverprofile
+	mv cmd/cmd.coverprofile coverage_INTEGRATION_http.coverprofile
+	mv cmd/junit.xml junit_INTEGRATION_http.xml
 
 	ginkgo -r -race -trace -cover -randomizeAllSpecs --slowSpecThreshold=65 --focus="\bINTEGRATION\b" -- --https=true
-	mv cmd/cmd.coverprofile INTEGRATION_https.coverprofile
+	mv cmd/cmd.coverprofile coverage_INTEGRATION_https.coverprofile
+	mv cmd/junit.xml junit_INTEGRATION_https.xml
 
 	cp resources/endpoint_template.yaml $(GOOUT)/linux/endpoint.yaml
 
 unit-test: build-linux
 	ginkgo -r -race -trace -cover -randomizeAllSpecs --slowSpecThreshold=65 --focus="\bUNIT\b" -- --https=false
-	mv cmd/cmd.coverprofile UNIT_http.coverprofile
+	mv cmd/cmd.coverprofile coverage_UNIT_http.coverprofile
+	mv cmd/junit.xml junit_UNIT_http.xml
 
 	ginkgo -r -race -trace -cover -randomizeAllSpecs --slowSpecThreshold=65 --focus="\bUNIT\b" -- --https=true
-	mv cmd/cmd.coverprofile UNIT_https.coverprofile
+	mv cmd/cmd.coverprofile coverage_UNIT_https.coverprofile
+	mv cmd/junit.xml junit_UNIT_https.xml
 
 	cp resources/endpoint_template.yaml $(GOOUT)/linux/endpoint.yaml
 
 test: build-linux
 	ginkgo -r -race -trace -cover -randomizeAllSpecs --slowSpecThreshold=65 -- --https=false
-	mv cmd/cmd.coverprofile http.coverprofile
+	mv cmd/cmd.coverprofile coverage_http.coverprofile
+	mv cmd/junit.xml junit_http.xml
 
 	ginkgo -r -race -trace -cover -randomizeAllSpecs --slowSpecThreshold=65 -- --https=true
-	mv cmd/cmd.coverprofile https.coverprofile
+	mv cmd/cmd.coverprofile coverage_https.coverprofile
+	mv cmd/junit.xml junit_https.xml
 
 	cp resources/endpoint_template.yaml $(GOOUT)/linux/endpoint.yaml
 
