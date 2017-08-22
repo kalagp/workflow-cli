@@ -8,7 +8,7 @@ pipeline {
     agent {
         docker {
             image 'rackhd/golang:1.8.3'
-            label 'maven-builder'
+            label 'builder-06'
 	    customWorkspace "workspace/${env.JOB_NAME}"
         }
     }
@@ -55,32 +55,15 @@ pipeline {
                 sh '''
                     cd /go/src/github.com/dellemc-symphony/workflow-cli/
                     make integration-test
+		    make coverage
                 '''
+		**/all-maven.html,
+	        archiveArtifacts '**/coverage_INTEGRATION_https.xml,**/coverage_INTEGRATION_http.xml,**/junit_INTEGRATION_http.xml,**/junit_INTEGRATION_https.xml'
+		    
             }
         }
-        stage('NexB Scan') {
-             steps {
-                    checkout([$class: 'GitSCM',
-                              branches: [[name: '*/master']],
-                              doGenerateSubmoduleConfigurations: false,
-                              extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'nexB']],
-                              submoduleCfg: [],
-                              userRemoteConfigs: [[url: 'https://github.com/nexB/scancode-toolkit.git']]])
-		     checkout changelog: false, poll: false, scm: [$class: 'GitSCM',
-			      branches: [[name: '*/develop']],
-			      doGenerateSubmoduleConfigurations: false,
-			      extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'workflow-cli']],
-			      gitTool: 'linux-git', submoduleCfg: [],
-			      userRemoteConfigs: [[credentialsId: 'github-03', url: 'https://github.com/dellemc-symphony/workflow-cli.git']]]
-
-		    sh "mkdir -p  ${WORKSPACE}/nexb-output/"
-       		    sh "nexB/scancode --help"
-		    sh "nexB/scancode --format html workflow-cli ${WORKSPACE}/nexb-output/workflow-cli.html"
-		    sh "nexB/scancode --format html-app workflow-cli ${WORKSPACE}/nexb-output/workflow-cli-grap.html"
-		    archiveArtifacts '**/nexb-output/**'
-
-            }
-        }
+    
+	    
         stage('Release') {
             when {
                 branch '${RELEASE_BRANCH}'
@@ -148,7 +131,7 @@ pipeline {
             }
         }
     }
-    post {
+   /* post {
         always {
             cleanWorkspace()
         }
@@ -158,5 +141,5 @@ pipeline {
         failure {
             failureEmail()
         }
-    }
+    }*/
 }
