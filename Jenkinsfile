@@ -57,7 +57,7 @@ pipeline {
                     make integration-test
 		    make coverage
                 '''
-		**/all-maven.html,
+	
 	        archiveArtifacts '**/coverage_INTEGRATION_https.xml,**/coverage_INTEGRATION_http.xml,**/junit_INTEGRATION_http.xml,**/junit_INTEGRATION_https.xml'
 		    
             }
