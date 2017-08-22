@@ -67,11 +67,13 @@ pipeline {
             steps {
                 sh '''
                     cd /go/src/github.com/dellemc-symphony/workflow-cli/
+		//    find . -name '*.xml' | cpio -pdm ${WORKSPACE}	
                   
                 '''
 	
 	       // archiveArtifacts '**/coverage_INTEGRATION_https.xml,**/coverage_INTEGRATION_http.xml,**/junit_INTEGRATION_http.xml,**/junit_INTEGRATION_https.xml'
-		   archiveArtifacts '*.xml'
+		   archiveArtifacts '**/*'
+		 //   archiveArtifacts '**/*,**/*.xml'
 		//   archiveArtifacts '**/coverage_INTEGRATION_https.xml, **/coverage*.xml'
             }
         }
