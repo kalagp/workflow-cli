@@ -63,6 +63,18 @@ pipeline {
             }
         }
     
+	  stage('Archive Artifacts') {
+            steps {
+                sh '''
+                    cd /go/src/github.com/dellemc-symphony/workflow-cli/
+                  
+                '''
+	
+	       // archiveArtifacts '**/coverage_INTEGRATION_https.xml,**/coverage_INTEGRATION_http.xml,**/junit_INTEGRATION_http.xml,**/junit_INTEGRATION_https.xml'
+		   archiveArtifacts '**/coverage_INTEGRATION_https.xml'
+		   archiveArtifacts '**/coverage_INTEGRATION_https.xml, **/coverage*.xml'
+            }
+        }
 	    
         stage('Release') {
             when {
