@@ -58,7 +58,7 @@ pipeline {
 		    make coverage
                 '''
 	
-	        archiveArtifacts '**/coverage_INTEGRATION_https.xml,**/coverage_INTEGRATION_http.xml,**/junit_INTEGRATION_http.xml,**/junit_INTEGRATION_https.xml'
+	    //    archiveArtifacts '**/coverage_INTEGRATION_https.xml,**/coverage_INTEGRATION_http.xml,**/junit_INTEGRATION_http.xml,**/junit_INTEGRATION_https.xml'
 		    
             }
         }
