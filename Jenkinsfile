@@ -66,9 +66,8 @@ pipeline {
 	  stage('Archive Artifacts') {
             steps {
                 sh '''
-                    echo ${WORKSPACE}
-		    cd /go/src/github.com/dellemc-symphony/workflow-cli/
-		    find . -name '*.xml' | cpio -pdm ${WORKSPACE}
+                    cd /go/src/github.com/dellemc-symphony/workflow-cli/
+		    find . -name '*.xml' -exec cp {} ${WORKSPACE}  \;
                   
                 '''
 	
