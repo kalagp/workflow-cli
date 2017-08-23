@@ -67,7 +67,7 @@ pipeline {
             steps {
                 sh '''
                     cd /go/src/github.com/dellemc-symphony/workflow-cli/
-		    find . -name '*.xml' -exec cp {} ${WORKSPACE}  \\;
+		    find . -name '*coverage*.xml' -exec cp {} ${WORKSPACE}  \\;
                   
                 '''
 	
