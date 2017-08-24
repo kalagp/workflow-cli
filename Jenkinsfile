@@ -71,29 +71,21 @@ pipeline {
 		    find . -name '*coverage*.xml' -exec cp {} ${WORKSPACE}/Cobcov  \\;
                   
                 '''
-	
-	     
+	    
 		   // archiveArtifacts '*.xml'
-		    
-		//    step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/Cobcov/*.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
-		 //   junit 'coverage_INTEGRATION_http.xml'
-		//   archiveArtifacts '**/coverage_INTEGRATION_https.xml, **/coverage*.xml'
-            }
+	          //    step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/Cobcov/*.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+		  }
         }
-	  
-	stage('CodeCoverage') {
-            steps {
-	   /*     script {
-	          def sonarqubeScannerHome = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-		}*/
-		withSonarQubeEnv('SonarQube') { 
-                   sh "sonar:sonar -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN"    
-                }
-	     }
-         } 
-			
-			
-      
+	
+	stage('SonarQube analysis') {
+           // requires SonarQube Scanner 2.8+
+              def scannerHome = tool 'SonarQube Scanner 2.6.1';
+              withSonarQubeEnv('SonarQube') {
+                   sh "${scannerHome}/bin/sonar-scanner"
+       }
+     }    
+	 
+    
         stage('Release') {
             when {
                 branch '${RELEASE_BRANCH}'
