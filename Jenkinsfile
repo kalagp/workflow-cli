@@ -67,15 +67,15 @@ pipeline {
             steps {
                 sh '''
                     cd /go/src/github.com/dellemc-symphony/workflow-cli/
-		    find . -name '*coverage*.xml' -exec cp {} ${WORKSPACE}  \\;
+		    mkdir -p ${WORKSPACE}/Cobcov
+		    find . -name '*coverage*.xml' -exec cp {} ${WORKSPACE}/Cobcov  \\;
                   
                 '''
 	
-	       // archiveArtifacts '**/coverage_INTEGRATION_https.xml,**/coverage_INTEGRATION_http.xml,**/junit_INTEGRATION_http.xml,**/junit_INTEGRATION_https.xml'
-		//   archiveArtifacts '/go/src/github.com/dellemc-symphony/workflow-cli/*.xml'
-		    archiveArtifacts '*.xml'
+	     
+		   // archiveArtifacts '*.xml'
 		    
-		    step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage_INTEGRATION_http.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+		    step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/Cobcov/*.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
 		 //   junit 'coverage_INTEGRATION_http.xml'
 		//   archiveArtifacts '**/coverage_INTEGRATION_https.xml, **/coverage*.xml'
             }
