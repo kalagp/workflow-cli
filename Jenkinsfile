@@ -75,9 +75,24 @@ pipeline {
 	     
 		   // archiveArtifacts '*.xml'
 		    
-		    step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/Cobcov/*.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+		//    step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/Cobcov/*.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
 		 //   junit 'coverage_INTEGRATION_http.xml'
 		//   archiveArtifacts '**/coverage_INTEGRATION_https.xml, **/coverage*.xml'
+            }
+        }
+	  
+	stage('CodeCoverage') {
+            steps {
+	   /*     script {
+	          def sonarqubeScannerHome = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+		}*/
+		withSonarQubeEnv('SonarQube') { 
+                   sh "sonar:sonar -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN"    
+                }
+	 }
+    } 
+			
+			
             }
         }
 	    
