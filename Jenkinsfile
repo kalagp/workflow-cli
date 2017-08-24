@@ -77,14 +77,15 @@ pipeline {
 		  }
         }
 	
-	stage('SonarQube analysis') {
+	stage('SonarQube analysis') {		
+           steps {
            // requires SonarQube Scanner 2.8+
               def scannerHome = tool 'SonarQube Scanner 2.6.1';
               withSonarQubeEnv('SonarQube') {
                    sh "${scannerHome}/bin/sonar-scanner"
-       }
-     }    
-	 
+               }
+            }    
+	}
     
         stage('Release') {
             when {
