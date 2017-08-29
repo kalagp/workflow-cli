@@ -86,7 +86,11 @@ pipeline {
 	     withSonarQubeEnv('SonarQube') {
                    sh "${scannerHome}/bin/sonar-scanner"
                }*/
-	      sh "sonar-scanner"	   
+	       sh '''
+                    cd ${WORKSPACE}
+                    sonar-scanner
+                '''   
+	   
 		   
             }    
 	}
