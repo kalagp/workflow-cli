@@ -88,8 +88,14 @@ pipeline {
                }*/
 	       sh '''
                     cd ${WORKSPACE}
-                    sonar-scanner
-                '''   
+		    apt-get update
+		    apt-get -y install wget
+		    apt-get -y install unzip
+		    wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.3.778-linux.zip
+		    unzip sonar-scanner-cli-3.0.3.778-linux.zip
+		    cd sonar-scanner-3.0.3.778-linux/bin
+		    sh sonar-scanner -Dsonar.host.url=http://vpebrmsonpr01.mpe.lab.vce.com:9000/ -Dsonar.login=7c5d67425ab0655b7702c77592a063e277a9784b
+		 '''   
 	   
 		   
             }    
