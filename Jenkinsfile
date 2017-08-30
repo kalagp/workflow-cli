@@ -93,9 +93,9 @@ pipeline {
 		    apt-get -y install unzip
 		    wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.3.778-linux.zip
 		    unzip sonar-scanner-cli-3.0.3.778-linux.zip
-		    cd sonar-scanner-3.0.3.778-linux/bin
-		    sh sonar-scanner -Dsonar.host.url=http://vpebrmsonpr01.mpe.lab.vce.com:9000/ -Dsonar.login=7c5d67425ab0655b7702c77592a063e277a9784b -Dsonar.projectKey=Kalagp-workflow-cli -Dsonar.projectName=Kalagp-workflow-cli -Dsonar.projectVersion=1.0 -Dsonar.sources=cmd/ -Dsonar.tests=cmd/ -Dsonar.sourceEncoding=UTF-8 -Dsonar.cobertura.reportPath=Cobcov/coverage_INTEGRATION_http.xml
-		  //  sh sonar-scanner -Dsonar.host.url=http://vpebrmsonpr01.mpe.lab.vce.com:9000/ -Dsonar.login=7c5d67425ab0655b7702c77592a063e277a9784b
+		//    cd ${WORKSPACE}/sonar-scanner-3.0.3.778-linux/bin
+		//    ${WORKSPACE}/sonar-scanner-3.0.3.778-linux/bin/sonar-scanner -Dsonar.host.url=http://vpebrmsonpr01.mpe.lab.vce.com:9000/ -Dsonar.login=7c5d67425ab0655b7702c77592a063e277a9784b -Dsonar.projectKey=Kalagp-workflow-cli -Dsonar.projectName=Kalagp-workflow-cli -Dsonar.projectVersion=1.0 -Dsonar.sources=cmd/ -Dsonar.tests=cmd/ -Dsonar.sourceEncoding=UTF-8 -Dsonar.cobertura.reportPath=Cobcov/coverage_INTEGRATION_http.xml
+		    ${WORKSPACE}/sonar-scanner-3.0.3.778-linux/bin/sonar-scanner -Dsonar.host.url=http://vpebrmsonpr01.mpe.lab.vce.com:9000/ -Dsonar.login=7c5d67425ab0655b7702c77592a063e277a9784b
 		 '''   
 	   
 		   
